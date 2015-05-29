@@ -253,13 +253,22 @@ module Technoweenie # :nodoc:
         # The pseudo hierarchy containing the file relative to the bucket name
         # Example: <tt>:table_name/:id</tt>
         def base_path
-          File.join(attachment_options[:path_prefix], attachment_path_id)
+          if attachment_options[:partition]
+            File.join(attachment_options[:path_prefix], partitioned_path)
+          else
+            File.join(attachment_options[:path_prefix], attachment_path_id)
+          end          
         end
 
         # The full path to the file relative to the bucket name
         # Example: <tt>:table_name/:id/:filename</tt>
         def full_filename(thumbnail = nil)
           File.join(base_path, thumbnail_name_for(thumbnail))
+        end
+
+        # Utilize partitions for the attachment path
+        def partitioned_path(*args)
+          ("%08d" % attachment_path_id).scan(/..../) + args
         end
 
         # All public objects are accessible via a GET request to the S3 servers. You can generate a
