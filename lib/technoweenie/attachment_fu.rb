@@ -1,7 +1,7 @@
 module Technoweenie # :nodoc:
   module AttachmentFu # :nodoc:
-    @@default_processors = %w(ImageScience Rmagick MiniMagick Gd2 CoreImage)
-    @@tempfile_path      = File.join(Rails.root, 'tmp', 'attachment_fu')
+    @@default_processors = %w(ImageScience Rmagick MiniMagick Gd2 CoreImage)        
+    @@tempfile_path      = Dir.tmpdir
     @@content_types      = [
       'image/jpeg',
       'image/pjpeg',
